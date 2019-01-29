@@ -1,5 +1,9 @@
 const express = require('express')
 const app = express()
+let user = require('./router/user.js')
+let about = require('./router/about.js')
+app.use('/user', user)
+app.use('/about', about)
 app.set('view engine', 'pug')
 app.get('/', (req, res) => {
   res.render('index', {title: 'index page', msg: 'welcome'})
