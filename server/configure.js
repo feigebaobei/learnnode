@@ -6,12 +6,18 @@ var path = require('path'),
   cookieParser = require('cookie-parser'),
   morgan = require('morgan'),
   methodOverride = require('method-override'),
-  errorHandler = require('errorhandler')
+  errorHandler = require('errorhandler'),
+  moment = require('moment'),
+  multer = require('multer')
 
 module.exports = function (app) {
   app.use(morgan('dev'))
   app.use(bodyParser.urlencoded({'extended': true}))
   app.use(bodyParser.json())
+  // app.use(multer({dest: path.join(__dirname, 'public/upload/')}))
+  // app.use(multer({dest: path.join(__dirname, '../public/upload/')}).single('png')) // 可以正常运行
+  app.use(multer({dest: path.join(__dirname, 'public/upload/')}).any())
+  // app.use(multer())
   app.use(methodOverride())
   app.use(cookieParser('some-secret-value-here'))
   routes(app)
@@ -19,10 +25,16 @@ module.exports = function (app) {
   if ('development' === app.get('env')) {
     app.use(errorHandler())
   }
-  app.engine('handlebars', exphbs.create({
+  app.engine('handlebars', exphbs.create({ // 使后缀名是handlebars的文件使用 callback 做为模板引擎。
     defaultLayout: 'main',
     layoutDir: app.get('views') + '/layouts',
-    partialsDir: [app.get('views') + '/partials']
+    partialsDir: [app.get('views') + '/partials'],
+    helpers: {
+      timeago: (timestamp) => {
+        return moment(timestamp).startOf('minute').fromNow()
+        // return 'return minute'
+      }
+    }
   }).engine)
   app.set('view engine', 'handlebars')
   return app
