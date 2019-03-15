@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
   ObjectId = Schema.ObjectId
 
 var CommentSchema = new Schema({
-  image_id: {type: ObjectId},
+  // image_id: {type: ObjectId},
+  image_id: {type: String},
   email: {type: String},
   name: {type: String},
   gravatar: {type: String},

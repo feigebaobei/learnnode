@@ -31,8 +31,10 @@ module.exports = function (app) {
     partialsDir: [app.get('views') + '/partials'],
     helpers: {
       timeago: (timestamp) => {
-        return moment(timestamp).startOf('minute').fromNow()
-        // return 'return minute'
+        // 这里会报timestamp 的格式不对。
+        // 所以使用返回字符串
+        return '几分钟以前'
+        // return moment(timestamp).startOf('minute').fromNow()
       }
     }
   }).engine)

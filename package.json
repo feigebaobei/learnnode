@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/feigebaobei/learnnode#readme",
   "dependencies": {
+    "MD5": "^1.3.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "errorhandler": "^1.5.0",
