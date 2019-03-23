@@ -110,5 +110,23 @@ module.exports = {
         res.redirect('/')
       }
     })
+  },
+  remove: (req, res) => {
+    Models.Image.findOne({filename: {$regex: req.params.image_id}}, {}, {}, (err, image) => {
+      if (err) { throw err }
+      // console.log(image)
+      fs.unlink(path.resolve(`./public/upload/${image.filename}`), (err) => {
+        if (err) { throw err }
+        Models.Comment.remove({image_id: image.image_id}, (err) => {
+          image.remove((err) => {
+            if (!err) {
+              res.json(true)
+            } else {
+              res.json(false)
+            }
+          })
+        })
+      })
+    })
   }
 }

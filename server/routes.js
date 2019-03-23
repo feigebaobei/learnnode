@@ -8,6 +8,7 @@ module.exports = function(app) {
   // router.get('/first', home.first)
   router.get('/welcome', home.welcome)
   router.get('/images/:image_id', image.index)
+  router.delete('/images/:image_id', image.remove)
   router.post('/images', image.create)
   router.post('/images/:image_id/like', image.like)
   router.post('/images/:image_id/comment', image.comment)
